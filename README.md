@@ -1,12 +1,12 @@
 # Understanding the Gritti 2023 Handshake (Figure 3)
 
-# Source
+## Source
 The following diagram is taken directly from Gritti & Samandari (2023), 
 *"Post-Quantum Authentication in the MQTT Protocol"*, Figure 3.
 
 ![KEM-based MQTT Handshake](images/gritti_figure3.png)
 
-# Pre-coding analysis
+## Pre-coding analysis
 
 
 **Who generates `pke` and `ske` ?**
