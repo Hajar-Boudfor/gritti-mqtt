@@ -1,5 +1,11 @@
-# Understanding the Gritti 2023 Handshake (Figure 3)
+# Post-Quantum MQTT Authentication : Prototype
+## Based on Gritti & Samandari (2023)
 
+## 1. Motivation and Objectives
+
+
+
+## 2. Reference Protocol — Gritti 2023 (Figure 3)
 ## Source
 The following diagram is taken directly from Gritti & Samandari (2023), 
 *"Post-Quantum Authentication in the MQTT Protocol"*, Figure 3.
@@ -44,5 +50,19 @@ Upon receiving `pke`, the broker uses it to encapsulate an ephemeral shared secr
 HMAC, which stands for Hash-based Message Authentication Code, serves as the final confirmation step of the handshake. Each party independently computes `HMAC(final_key, all_previous_messages)` and sends the result to the other. If both values match, it confirms that the two parties have exchanged the same messages and derived the same session key, meaning the handshake completed successfully on both sides.
 
 ---
+
+
+
+## 3. Implementation Choices
+### 3.1 Environment
+### 3.2 Libraries used and justification
+
+## 4. Implementation Steps
+### 4.1 crypto_utils.py
+### 4.2 broker.py
+### 4.3 client.py
+### 4.4 main.py
+
+## 5. Results and Observations
 
 
