@@ -5,7 +5,7 @@ from crypto_utils import generate_nonce, compute_hmac, derive_key
 class MQTTClient:
 
     def __init__(self):
-        print("=== MQTT CLIENT ===")
+        print("==== MQTT CLIENT ====")
         self.pke = None
         self.ske = None
         self.ss_e = None

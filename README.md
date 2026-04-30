@@ -54,8 +54,8 @@ HMAC, which stands for Hash-based Message Authentication Code, serves as the fin
 
 
 ## 3. Implementation Choices
-### 3.1 Environment
-### 3.2 Libraries used and justification
+
+
 
 ## 4. Implementation Steps
 ### 4.1 crypto_utils.py
