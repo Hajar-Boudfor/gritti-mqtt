@@ -1,11 +1,12 @@
 import os
-from pqcrypto.kem.kyber512 import generate_keypair, encapsulate, decapsulate
+import oqs
 from crypto_utils import generate_nonce, compute_hmac, derive_key
 
 class MQTTClient:
 
     def __init__(self):
         print("==== MQTT CLIENT ====")
+        self.kem = oqs.KeyEncapsulation('Kyber512')
         self.pke = None
         self.ske = None
         self.ss_e = None
@@ -15,7 +16,8 @@ class MQTTClient:
     def send_client_hello(self):
         """Step 1 : Client generates ephemeral key pair and sends ClientHello."""
         print("\nClient: Generating ephemeral key pair...")
-        self.pke, self.ske = generate_keypair()
+        self.pke = self.kem.generate_keypair()
+        self.ske = self.kem.export_secret_key()
         rc = generate_nonce()
         print("Client: Sending ClientHello.")
         return self.pke, rc
@@ -23,14 +25,12 @@ class MQTTClient:
     def receive_broker_hello(self, rb, ct_e, pks):
         """Step 3 : Client decapsulates ct_e and encapsulates ss_s."""
         print("\nClient: Received BrokerHello.")
-        # Decapsulate ephemeral secret
-        self.ss_e = decapsulate(ct_e, self.ske)
+        kem_e = oqs.KeyEncapsulation('Kyber512', secret_key=self.ske)
+        self.ss_e = kem_e.decap_secret(ct_e)
         print("Client: Decapsulated ephemeral secret ss_e.")
-        # Encapsulate static secret with broker's long-term public key
-        # cert[pks] simplified to pks directly (Gritti skeleton approach)
-        ct_s, self.ss_s = encapsulate(pks)
+        kem_s = oqs.KeyEncapsulation('Kyber512')
+        ct_s, self.ss_s = kem_s.encap_secret(pks)
         print("Client: Encapsulated static secret ss_s.")
-        # Derive shared key
         self.key = derive_key(self.ss_e, self.ss_s)
         print("Client: Session key derived.")
         return ct_s
