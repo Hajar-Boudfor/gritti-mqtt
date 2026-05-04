@@ -10,7 +10,7 @@
 The following diagram is taken directly from Gritti & Samandari (2023), 
 *"Post-Quantum Authentication in the MQTT Protocol"*, Figure 3.
 
-![KEM-based MQTT Handshake](images/gritti_figure3.png)
+![KEM-based MQTT Handshake](gritti_figure3.png)
 
 ## Pre-coding analysis
 
