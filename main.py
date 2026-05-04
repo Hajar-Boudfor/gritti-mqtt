@@ -1,6 +1,4 @@
-#main.py
-
-
+import hashlib
 from client import MQTTClient
 from broker import MQTTBroker
 
@@ -19,8 +17,7 @@ ct_s = client.receive_broker_hello(rb, ct_e, pks)
 
 # Step 4 : ClientFinished
 all_messages = rc + rb + pke + ct_e + pks + ct_s
-transcript = hashlib.sha256(all_messages).digest()
-messages = transcript
+messages = hashlib.sha256(all_messages).digest()
 client_hmac = client.send_client_finished(messages)
 
 # Step 5 : Broker vérifie
@@ -32,6 +29,6 @@ if auth_ok:
     broker_hmac = broker.send_broker_finished(messages)
     success = client.verify_broker_finished(broker_hmac, messages)
     if success:
-        print("\nKEM-MQTT Handshake completed successfully!")
+        print("\n KEM-MQTT Handshake completed successfully!")
     else:
         print("\n Handshake failed.")
